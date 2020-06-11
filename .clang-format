@@ -1,0 +1,239 @@
+---
+# 官方文档写的很详细，并且举例很多，可以参考 https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+# 语言: None, Cpp, Java, JavaScript, ObjC, Proto, TableGen, TextProto
+Language:        Cpp
+# 基于某一主题上的修改
+# BasedOnStyle:  Google
+# 访问控制符(public、private等)的偏移
+AccessModifierOffset: -1
+# 函数调用等左括号后(开圆括号"("、开尖括号"<"、开方括号"[")后，如果出现了换行，换行后
+# 换行后的对齐方式: Align, DontAlign, AlwaysBreak
+# Align 换行后，行首对齐到前面的(处
+# DontAlign 换行后，行首不与(对齐
+# AlwaysBreak 如果出现换行，(处首先进行换行，例如 x = func(a,\n b); => x = func(\n a, b);
+AlignAfterOpenBracket: Align
+# 连续多行宏声明时，是否对齐
+AlignConsecutiveMacros: true
+# 连续赋值时，对齐所有等号，多行都有=赋值时，= 处居中对齐
+AlignConsecutiveAssignments: true
+# 连续声明时，对齐所有声明的变量名
+AlignConsecutiveDeclarations: true
+# 末尾使用\换行的语句时，\对齐的方式，参考官方文档样例
+AlignEscapedNewlines: Left
+# 多个操作符换行时，是否对齐
+AlignOperands:   true
+# 对齐连续的尾随的注释，即连续多行末尾的//注释
+AlignTrailingComments: true
+# 是否允许函数参数过多导致换行时，多个参数共在一行，false会使每个参数新起一行
+AllowAllArgumentsOnNextLine: true
+# 允许构造函数的多个初始化参数共在一行，跟ConstructorInitializerAllOnOneLineOrOnePerLine参数共同作用
+AllowAllConstructorInitializersOnNextLine: false
+# 允许函数声明换行
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowShortBlocksOnASingleLine: Never
+# 允许短的case标签放在同一行
+AllowShortCaseLabelsOnASingleLine: false
+# 允许短的函数格式化成一行，参考官方例子
+AllowShortFunctionsOnASingleLine: All
+AllowShortLambdasOnASingleLine: All
+# 允许短的if语句保持在同一行
+AllowShortIfStatementsOnASingleLine: WithoutElse
+# 允许短的循环保持在同一行
+AllowShortLoopsOnASingleLine: true
+AlwaysBreakAfterDefinitionReturnType: None
+# return语句前要不要强制换行
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: true
+# template <typename T>后强制换行
+AlwaysBreakTemplateDeclarations: Yes
+BinPackArguments: true
+BinPackParameters: true
+BraceWrapping:
+  AfterCaseLabel:  true
+  AfterClass:      false
+  AfterControlStatement: false
+  AfterEnum:       false
+  AfterFunction:   false
+  AfterNamespace:  false
+  AfterObjCDeclaration: false
+  AfterStruct:     false
+  AfterUnion:      false
+  AfterExternBlock: false
+  BeforeCatch:     false
+  BeforeElse:      false
+  IndentBraces:    false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+BreakBeforeBinaryOperators: None
+# "{"前后换行策略，详情看文档举例
+BreakBeforeBraces: Attach
+BreakBeforeInheritanceComma: false
+# class继承列表格式化风格
+BreakInheritanceList: BeforeColon
+BreakBeforeTernaryOperators: true
+# 在构造函数的初始化列表中，逗号前断行： foo() : a(1)\n,b(2)\n,c(3)
+BreakConstructorInitializersBeforeComma: true
+# class构造函数初始化列表格式化风格
+BreakConstructorInitializers: BeforeComma
+BreakAfterJavaFieldAnnotations: true
+BreakStringLiterals: true
+
+# 每行字符的限制，0表示没有限制
+ColumnLimit:     80
+CommentPragmas:  '^ IWYU pragma:'
+CompactNamespaces: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+# 构造函数初始化列表缩进
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 4
+Cpp11BracedListStyle: true
+# 启发学习换行符的格式，"\r\n" OR "\n"
+DeriveLineEnding: true
+# 启发时格式化指针对齐的方式，true 时启发学习文件中指针对齐的方式，
+# 根据大多数的对齐方式进行对齐，false时根据PointerAlignment的设置来格式化。
+DerivePointerAlignment: true
+DisableFormat:   false
+ExperimentalAutoDetectBinPacking: false
+# namespace 末尾"}"后补全注释 => "} // namespace xxx"
+FixNamespaceComments: true
+# FOREACH宏都有哪些，可以增加
+ForEachMacros:
+  - foreach
+  - Q_FOREACH
+  - BOOST_FOREACH
+# 合并分组不同种类的#include "" / #include <>
+IncludeBlocks:   Regroup
+# 根据正则表达式来识别#include的分组和优先级，具体看文档
+IncludeCategories:
+  - Regex:           '^<ext/.*\.h>'
+    Priority:        2
+    SortPriority:    0
+  - Regex:           '^<.*\.h>'
+    Priority:        1
+    SortPriority:    0
+  - Regex:           '^<.*'
+    Priority:        2
+    SortPriority:    0
+  - Regex:           '.*'
+    Priority:        3
+    SortPriority:    0
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+IncludeIsMainSourceRegex: ''
+# switch中不单独缩进case表达式
+IndentCaseLabels: false
+IndentGotoLabels: true
+# 宏定义时，是否缩进#if #else等
+IndentPPDirectives: None
+# 缩进宽度，2个空格
+IndentWidth:     2
+IndentWrappedFunctionNames: true
+JavaScriptQuotes: Leave
+JavaScriptWrapImports: true
+# 是否保留Block开头的空行
+KeepEmptyLinesAtTheStartOfBlocks: false
+# 用正则表达式识别宏定义的Block，具体参考文档
+MacroBlockBegin: ''
+MacroBlockEnd:   ''
+# 有连续多个空行时，只保留一个空格，删除多余的
+MaxEmptyLinesToKeep: 1
+NamespaceIndentation: None
+ObjCBinPackProtocolList: Never
+# 在OC中Block后面的缩进
+ObjCBlockIndentWidth: 2
+# 在OC中，@property 后面添加空格, \@property (readonly) 而不是 \@property(readonly).
+ObjCSpaceAfterProperty: false
+ObjCSpaceBeforeProtocolList: true
+# 如果一行太长了，超过了ColumnLimit的限制，在格式化时，就会被折行，但是有时自动折行的结果
+# 看起来很古怪，比如:
+# call::loooooooooong_namespace::loooooooooooong_classname::func(arg);
+# 可能被自动格式化为:
+# call::loooooooooong_namespace::loooooooooooong_classname::func(
+#   arg);
+# 这样看起来就十分古怪，因此可以在某些情况下，放松对ColumnLimit的硬限制
+# 参考 https://stackoverflow.com/questions/26635370/in-clang-format-what-do-the-penalties-do
+PenaltyBreakAssignment: 10
+PenaltyBreakBeforeFirstCallParameter: 30
+PenaltyBreakComment: 10
+PenaltyBreakFirstLessLess: 0
+PenaltyBreakString: 10
+PenaltyBreakTemplateDeclaration: 10
+PenaltyExcessCharacter: 100
+PenaltyReturnTypeOnItsOwnLine: 5
+# 指针*符号的对齐方式 Left: int* a; Right: int *a; Middle: int * a;
+PointerAlignment: Right
+# 如果RAW字符串中包含下面指定的分隔符时，会被识别为对应的语言从而进行格式化，感觉是
+# 不太能用到的特性，具体参考 https://reviews.llvm.org/D42098 中的用例，
+# 如果代码中有一个RAW字符串 R"cpp(int *i = 0;)cpp" 则会被识别为CPP，进行格式化
+RawStringFormats:
+  - Language:        Cpp
+    Delimiters:
+      - cc
+      - CC
+      - cpp
+      - Cpp
+      - CPP
+      - 'c++'
+      - 'C++'
+    CanonicalDelimiter: ''
+    BasedOnStyle:    google
+  - Language:        TextProto
+    Delimiters:
+      - pb
+      - PB
+      - proto
+      - PROTO
+    EnclosingFunctions:
+      - EqualsProto
+      - EquivToProto
+      - PARSE_PARTIAL_TEXT_PROTO
+      - PARSE_TEST_PROTO
+      - PARSE_TEXT_PROTO
+      - ParseTextOrDie
+      - ParseTextProtoOrDie
+    CanonicalDelimiter: ''
+    BasedOnStyle:    google
+# 折行过长的注释
+ReflowComments:  true
+# 允许排序#include
+SortIncludes:    false
+# 允许排序using声明
+SortUsingDeclarations: true
+# C风格的类型转换前是否加入换行 "(int)x" vs "(int) x"
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceAfterTemplateKeyword: true
+# 赋值操作符 = 两边插入空格
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCpp11BracedList: false
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true
+# 控制语句的()前加入空格: if (xx) / for (;;)
+SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: true
+# 空的Block中插入空格 "while(0){}" => "while (0) { }"
+SpaceInEmptyBlock: true
+SpaceInEmptyParentheses: false
+SpacesBeforeTrailingComments: 2
+SpacesInAngles:  false
+SpacesInConditionalStatement: false
+# 容器类的语句内部是否插入空格，"var arr = [1, 2, 3];" => "var arr = [ 1, 2, 3 ];"
+SpacesInContainerLiterals: true
+SpacesInCStyleCastParentheses: false
+# 小括号两边是否插入空格，"t f(Deleted &) & = delete;" => "t f( Deleted & ) & = delete;"
+SpacesInParentheses: false
+# 数组访问时的"array[1]"的[]中是否插入空格，变为"array[ 1 ]"
+SpacesInSquareBrackets: false
+SpaceBeforeSquareBrackets: false
+# 模板<>符号格式化的标准因为在C++11中才支持了func<a<1>>这种写法，之前需要写成func<a<1> >
+Standard:        Auto
+StatementMacros:
+  - Q_UNUSED
+  - QT_REQUIRE_VERSION
+# TAB的宽度
+TabWidth:        2
+UseCRLF:         false
+# 是否使用TAB，换言之是否用空格代替TAB
+UseTab:          Never
+...
+

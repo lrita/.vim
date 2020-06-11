@@ -1,5 +1,5 @@
 " 设置Vundle
-set nocompatible              " be iMproved, required                                                                                       
+set nocompatible              " be iMproved, required
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -16,7 +16,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 " vim-airline configure
 let g:airline_detect_modified=1
-let g:airline_detect_paste=1                                                                                                                
+let g:airline_detect_paste=1
 let g:airline_enable_syntastic=1
 let g:airline_theme="powerlineish"
 let g:airline_left_sep = ''
@@ -31,6 +31,14 @@ Plugin 'vim-scripts/a.vim'
 " 在normal模式下，F12切换.c/.h之间
 " 映射参考 http://haoxiang.org/2011/09/vim-modes-and-mappin/
 nnoremap <silent> <F12> :A<CR>
+" 对应文件不存在时，不切换当前文件
+let g:alternateNoDefaultAlternate = 1
+" let g:alternateSearchPath = 'sfr:../source,sfr:../src,sfr:../include,sfr:../inc,sfr:../include/**'
+
+" 优化行尾的多余空格，https://github.com/ntpeters/vim-better-whitespace
+Plugin 'ntpeters/vim-better-whitespace'
+let g:better_whitespace_enabled = 1
+let g:strip_whitespace_on_save = 1
 
 Plugin 'taglist.vim'
 Plugin 'vim-scripts/winmanager'
@@ -49,6 +57,9 @@ let g:go_highlight_types = 1
 let g:go_highlight_build_constraints = 1
 
 "Plugin 'mdempsky/gocode', {'rtp': 'vim/'}
+
+" C++11/14/17 语法高亮增强，https://github.com/octol/vim-cpp-enhanced-highlight
+Plugin 'octol/vim-cpp-enhanced-highlight'
 
 Plugin 'derekwyatt/vim-scala'
 Plugin 'Valloric/YouCompleteMe'
@@ -83,6 +94,18 @@ let g:ycm_filetype_whitelist = {
 "let g:ycm_filepath_completion_use_working_dir = 1
 " 补全内容不以分割子窗口形式出现，只显示补全列表
 ""set completeopt-=preview"
+
+" 学习参考 https://yianwillis.github.io/vimcdoc/doc/help.html#reference_toc
+"          https://github.com/spf13/spf13-vim
+"
+" 可以考虑的插件 https://github.com/SirVer/ultisnips
+"                https://github.com/rhysd/vim-grammarous
+"                https://github.com/terryma/vim-multiple-cursors
+"                https://github.com/xolox/vim-easytags
+"                https://github.com/majutsushi/tagbar
+"                https://github.com/preservim/nerdtree
+"                https://github.com/jistr/vim-nerdtree-tabs
+"                https://segmentfault.com/q/1010000000262368
 Plugin 'racer-rust/vim-racer'
 Plugin 'rust-lang/rust.vim'
 "let g:rustfmt_autosave=1
@@ -148,7 +171,8 @@ call glaive#Install()
 " Optional: Enable codefmt's default mappings on the <Leader>= prefix.
 Glaive codefmt plugin[mappings]
 Glaive codefmt google_java_executable="java -jar /Users/yanqing11/tmp/codefmt/google-java-format-VERSION-all-deps.jar"
-Glaive codefmt clang_format_style='google'
+" 使用~/.clang-format控制clang_format风格
+Glaive codefmt clang_format_style='file'
 Glaive codefmt shfmt_options=`['-i', '2', '-sr', '-ci', '-bn']`
 
 " 映射F8键执行代码格式化命令
@@ -214,7 +238,7 @@ else
 endif
 " <=========命令补全结束===========>
 
-" :W sudo saves the file 
+" :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w
 " Set to auto read when a file is changed from the outside
@@ -240,7 +264,7 @@ set ignorecase
 set cursorline
 
 colorscheme wombat256mod
-"colorscheme inkpot 
+"colorscheme inkpot
 
 " 开启语法高亮功能，实际上，它只是执行“:source $VIMRUNTIME/syntax/syntax.vim”
 " 关于设置你自己的语法高亮色彩，可以参见syncolor
@@ -288,13 +312,13 @@ map <silent> <F7> :call SwitchMouseMode()<cr>
 "see :h omnifunc in Vim
 "set omnifunc=omni
 "配置Powerline插件
-set laststatus=2 
+set laststatus=2
 "set statusline=%F%m%r%h%w\ (%{&ff}){%Y}[%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 
 set fencs=utf-8,gbk,gb2312,gb18030,cs-bom,cp936,latin1
 " 习惯新建文件是某种编码则在此写上此编码
 set enc=utf-8
-" set fenc=utf-8  
+" set fenc=utf-8
 set tenc=utf-8
 "taglist set
 "nnoremap <slient> <F4> :TlistToggle<CR>
@@ -306,32 +330,32 @@ set tenc=utf-8
 "let Tlist_Enable_Fold_Colum = 0
 "let Tlist_WinWidth = 40
 "let Tlist_Show_One_File=1
-let g:tagbar_type_go = {  
-    \ 'ctagstype' : 'go',  
-    \ 'kinds'     : [  
-        \ 'p:package',  
-        \ 'i:imports:1',  
-        \ 'c:constants',  
-        \ 'v:variables',  
-        \ 't:types',  
-        \ 'n:interfaces',  
-        \ 'w:fields',  
-        \ 'e:embedded',  
-        \ 'm:methods',  
-        \ 'r:constructor',  
-        \ 'f:functions'  
-    \ ],  
-    \ 'sro' : '.',  
-    \ 'kind2scope' : {  
-        \ 't' : 'ctype',  
-        \ 'n' : 'ntype'  
-    \ },  
-    \ 'scope2kind' : {  
-        \ 'ctype' : 't',  
-        \ 'ntype' : 'n'  
-    \ },  
-    \ 'ctagsbin'  : 'gotags',  
-    \ 'ctagsargs' : '-sort -silent'  
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
 \ }
 let g:netrw_winsize = 30
 nmap <silent> <leader>fe :Sexplore!<cr> thon  set
