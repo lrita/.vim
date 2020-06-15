@@ -64,36 +64,81 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'Valloric/YouCompleteMe'
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-nnoremap <F6> :YcmDiags<CR>
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_min_num_of_chars_for_completion = 1
+" 行数列左侧用">>"标记出有语法问题的行，可以通过命令":set signcolumn=no"临时关闭
+let g:ycm_enable_diagnostic_signs = 1
 " 跳转到定义 ctrl + ]
 nnoremap <C-l> :YcmCompleter GoTo<CR>
-nnoremap <F2> :YcmCompleter GoToInclude<CR>
-nnoremap <F4> :YcmCompleter GetType<CR>
 nnoremap <C-'> :YcmCompleter GetParent<CR>
+nnoremap <F2> :YcmCompleter GoToInclude<CR>
+" 跳转到声明或者定义
+nnoremap <F3> :YcmCompleter GoTo<CR>
+" 显示变量对应的类型
+nnoremap <F4> :YcmCompleter GetType<CR>
+" 重新编译并诊断语法问题
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+" 显示有语法问题的导航列表，可以通过命令":lclose"关闭
+nnoremap <F6> :YcmDiags<CR>
 
-"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"function! s:my_cr_function()
-"  return pumvisible() ? "\<C-y>" : "\<CR>"
-"endfunction
-" 文件类型白名单，在filetype符合的文件中开启YCM插件
+" 文件类型白名单，在filetype符合的文件中开启YCM插件，可以通过命令":set filetype?"查看当前文件类型
 let g:ycm_filetype_whitelist = {
 	\ 'cpp': 1
+	\,'c': 1
 	\ }
 " let g:ycm_filetype_blacklist = { '*': 1 }
-"let g:ycm_collect_identifiers_from_tags_files = 1
-"补全语法里的关键字
-"let g:ycm_seed_identifiers_with_syntax = 1
-"let g:ycm_autoclose_preview_window_after_completion = 1
-"let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
-"let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
-"let g:ycm_key_invoke_completion = '<C-Space>'
-"https://github.com/Valloric/YouCompleteMe#the-gycm_goto_buffer_command-option
-"let g:ycm_complete_in_comments = 1
-"let g:ycm_confirm_extra_conf = 0
-"let g:ycm_filepath_completion_use_working_dir = 1
-" 补全内容不以分割子窗口形式出现，只显示补全列表
-""set completeopt-=preview"
+" let g:ycm_filter_diagnostics 参考文档，可以设定诊断信息的过滤器，去除一些不想处理的信息
+" 修正弹出补全框时回车的行为，https://vim.fandom.com/wiki/Improve_completion_popup_menu
+inoremap <expr> <CR> pumvisible() ? "\<C-Y>\<ESC>a" : "\<CR>"
+" 在注释中开启补全
+let g:ycm_complete_in_comments = 1
+" 在评论和字符串中收集可以用以补全的标识符
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+" 从ctags结果中收集用以补全的标识符
+let g:ycm_collect_identifiers_from_tags_files = 1
+" 补全语法里的关键字
+let g:ycm_seed_identifiers_with_syntax = 1
+set completeopt-=preview
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_max_diagnostics_to_display = 0
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
+let g:ycm_key_invoke_completion = '<c-.>'
+let g:ycm_semantic_triggers = {
+	\ 'c,cpp,cuda,objcpp': ['->', '.', '::', 're!\w{2}'],
+	\ 'objc': ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+	\          're!\[.*\]\s'],
+	\ 'ocaml': ['.', '#'],
+	\ 'perl': ['->'],
+	\ 'php': ['->', '::'],
+	\ 'cs,d,elixir,go,groovy,java,javascript,julia,perl6,python,scala,typescript,vb': ['.'],
+	\ 'ruby,rust': ['.', '::'],
+	\ 'lua': ['.', ':'],
+	\ 'erlang': [':'],
+	\ }
+" 使用clangd作为补全引擎
+let g:ycm_use_clangd = 1
+" HOMEBREW_NO_AUTO_UPDATE=1 brew install llvm 后会拥有clangd
+let g:ycm_clangd_binary_path = '/usr/local/Cellar/llvm/10.0.0_3/bin/clangd'
+" /usr/local/Cellar/llvm/10.0.0_3/bin/clangd --help 可以查看参数
+let g:ycm_clangd_args = [
+	\ '--clang-tidy=false',
+	\ '--pretty',
+	\ '--header-insertion=never',
+	\ '--limit-results=0'
+	\ ]
+
+" python相关
+" let g:ycm_server_python_interpreter = ''
+" 其他语言的语法服务器，参考
+" https://github.com/ycm-core/YouCompleteMe#option-2-provide-the-flags-manually
+" let g:ycm_language_server = []
+" gopls配置
+" let g:ycm_gopls_args = []
+
+" 需要研究一下的 https://github.com/ycm-core/YouCompleteMe#using-omnifunc-for-semantic-completion
+" 新的配置       https://github.com/ycm-core/YouCompleteMe#option-2-provide-the-flags-manually
 
 " 学习参考 https://yianwillis.github.io/vimcdoc/doc/help.html#reference_toc
 "          https://github.com/spf13/spf13-vim
@@ -294,18 +339,18 @@ fun! SwitchMouseMode()
 	endif
 endfun
 
-let g:PasteMode='0'
-fun! SwitchPasteMode()
-	if g:PasteMode == '0'
-		setlocal paste
-		let g:PasteMode='1'
-	else
-		setlocal nopaste
-		let g:PasteMode='0'
-	endif
-endfun
+""let g:PasteMode='0'
+""fun! SwitchPasteMode()
+""	if g:PasteMode == '0'
+""		setlocal paste
+""		let g:PasteMode='1'
+""	else
+""		setlocal nopaste
+""		let g:PasteMode='0'
+""	endif
+""endfun
 
-map <silent> <F3> :call SwitchPasteMode()<cr> "粘贴时取消自动缩进功能
+""map <silent> <F3> :call SwitchPasteMode()<cr> "粘贴时取消自动缩进功能
 map <silent> <F7> :call SwitchMouseMode()<cr>
 "set foldmethod=marker
 "显色风格
