@@ -1,0 +1,43 @@
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[user]
+	name = lrita
+	email = lrita@163.com
+[color]
+	status = auto
+[alias]
+	co=checkout
+	df=diff
+	ci=commit
+	st=status
+	pl=pull
+	ps=push
+	dt=difftool
+	l=log—stat
+	cp=cherry-pick
+	ca=commit-a
+	b=branch
+	mt=mergetool
+	su=stash save -u
+	patch = !git --no-pager diff --no-color
+[core]
+	editor = /usr/local/bin/code -w
+	autocrlf = false
+[credential]
+	helper = cache --timeout 86400
+[merge]
+	tool = meld
+	conflictstyle = diff3
+[mergetool "meld"]
+	cmd = meld $LOCAL $BASE $REMOTE --output=$MERGED --auto-merge
+[diff]
+	tool = meld
+[difftool]
+	prompt = false
+[difftool "meld"]
+	trustExitCode = true
+	cmd = meld \"$LOCAL\" \"$PWD/$REMOTE\"
+[pull]
+	rebase = true
